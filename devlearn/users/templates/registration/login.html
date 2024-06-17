@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Войти в DevLearn{% endblock title %}
+
+{% block content %}
+<div class="d-flex justify-content-center" style="height: 100vh;">
+    <div class="login-container">
+        <h2 class="text-center mb-4">Войти в DevLearn</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Войти</button>
+        </form>
+        <p class="text-center mt-3">
+            <a href="{% url 'account:password_reset' %}">Забыли пароль?</a>
+        </p>
+        <p class="text-center mt-3">
+            Нет аккаунта? <a href="{% url 'account:register' %}">Зарегистрируйтесь</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+<style>
+</style>
