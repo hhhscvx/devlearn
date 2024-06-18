@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+
+{% block title %}Каталог курсов - DevLearn{% endblock title %}
+
+{% block content %}
+    {% for course in courses %}
+        <div class="course">
+            <h2>{{ course.title }}</h2>
+            {% for lesson in course.lessons.all %}
+                <div class="lesson">
+                    <p>{{ lesson.title }}</p>
+                    <div>{{ lesson.body }}</div>
+                    {% video lesson.video as my_video %}
+                        {% video my_video 'small' %}
+                    {% endvideo %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock content %}

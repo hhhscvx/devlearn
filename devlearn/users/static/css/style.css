@@ -3,7 +3,7 @@
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 365px;
+    max-height: 425px;
     width: 380px;
 }
 .form-control:focus {
