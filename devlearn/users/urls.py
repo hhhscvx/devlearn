@@ -7,5 +7,5 @@ urlpatterns = [
     path('account/login/', views.CustomLoginView.as_view(), name='login'),
     path('account/', include('django.contrib.auth.urls')),
     path('account/register/', views.register_view, name='register'),
-    path('', views.view_base, name='dashboard')
+    path('learn/', views.my_courses_view, name='my_course_list')
 ]

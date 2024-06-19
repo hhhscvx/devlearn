@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Каталог курсов - DevLearn{% endblock title %}
+{% block title %}Мои курсы. DevLearn{% endblock title %}
 
 {% block content %}
-    <img src="vk_logo_icon_147212.png" alt="VK">
     <div class="course-container">
-        {% for course in courses %}
+        {% for course in user.courses.all %}
             <div class="course-item" onClick="location.href='{% url "courses:course_detail" course.slug %}'">
                 {% if course.preview %}
                     <img src="{{ course.preview.url }}" alt="{{ course.title }}" class="course-preview">
@@ -28,35 +27,21 @@
             </div>
         {% endfor %}
     </div>
-    {% if courses.has_other_pages %}
-      <ul class="pagination">
-        {% if courses.has_previous %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
           <li class="page-item">
-            <a class="page-link" href="?page={{ courses.previous_page_number }}">
+            <a class="page-link" href="#" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-        {% else %}        
-          <li class="page-item disabled">
-            <a class="page-link">&laquo;</a>
-          </li>
-        {% endif %}
-        {% for i in courses.paginator.page_range %}
-          {% if courses.number == i %}
-            <li class="page-item"><a class="page-link disabled" href="?page=1">{{ i }}</a></li>
-          {% else %}
-            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-          {% endif %}
-        {% endfor %}
-        {% if courses.has_next %}
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item">
-            <a class="page-link" href="?page={{ courses.next_page_number }}">&raquo;</a>
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
           </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link">&raquo;</a>
-        </li>
-        {% endif %}
-      </ul>
-    {% endif %}
+        </ul>
+      </nav>
 {% endblock content %}

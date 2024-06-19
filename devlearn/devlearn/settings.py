@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'taggit',
     'embed_video',
+    #'social_django',
 
     'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
@@ -142,3 +143,9 @@ LOGOUT_URL = 'account:logout'
 
 LOGIN_REDIRECT_URL = 'courses:course_list'
 LOGOUT_REDIRECT_URL = 'courses:course_list'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# SOCIAL_AUTH_GITHUB_KEY = 'Ov23ctyqrKQNz0BsmEBd'
+# SOCIAL_AUTH_GITHUB_SECRET = '3f33568e679f9001a9b2980e19479c2580c89e61'

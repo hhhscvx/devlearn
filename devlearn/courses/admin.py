@@ -4,11 +4,11 @@ from embed_video.admin import AdminVideoMixin
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('title',)}
 
 @admin.register(Lesson)
 class LessonAdmin(AdminVideoMixin, admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('title',)}
 
 @admin.register(UserCourseRelation)
 class UserCourseRelationAdmin(admin.ModelAdmin):

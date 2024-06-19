@@ -2,12 +2,17 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
+from django.core.paginator import Paginator
 
 
+def my_courses_view(request):
+    courses = request.user.courses.all()
+    paginator = Paginator(courses, 12)
 
-def view_base(request):
-    return render(request, 'base.html')
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'my_courses.html', {'courses': courses})
+
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
@@ -23,7 +28,7 @@ def register_view(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('account:dashboard')
+            return redirect('courses:course_list')
         else:
             return render(request, 'registration/register.html', {'form': form})
     else:

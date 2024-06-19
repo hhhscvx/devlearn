@@ -14,7 +14,8 @@ class Lesson(models.Model):
     slug = models.SlugField(max_length=80, unique=True)
 
     order = fields.OrderField(blank=True, for_fields='course')
-    body = models.TextField()
+    body = models.TextField(blank=True, null=True)
+    # completed = models.BooleanField(default=False)
 
     video = EmbedVideoField(blank=True, null=True)
 
@@ -32,11 +33,15 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='courses',
                                       through="UserCourseRelation")
 
-    price = models.IntegerField
+    price = models.IntegerField(default=0)
 
     title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, unique=True)
-    preview = models.ImageField(blank=True, null=True)
+    preview = models.ImageField(upload_to='course_previews/',
+                                blank=True, null=True, db_index=True)
+    # completed = models.BooleanField(default=False)
+
+    description = models.TextField(max_length=255, blank=True, null=True)
 
     released = models.DateField(auto_now_add=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2,
@@ -44,7 +49,7 @@ class Course(models.Model):
     tags = TaggableManager()
 
     def __str__(self) -> str:
-        return f'Курс {self.title} от {self.owner.username}'
+        return f'{self.title} от {self.owner.username}'
 
 
 class UserCourseRelation(models.Model):
@@ -59,10 +64,13 @@ class UserCourseRelation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
+    enrolled = models.BooleanField(default=False)
     like = models.BooleanField(default=False)
     in_bookmarks = models.BooleanField(default=False)  # "хочу пройти"
-    rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None)
-    comment = models.TextField(default=None, max_length=250)
+    rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
+                                            blank=True, null=True)
+    comment = models.TextField(max_length=250, default=None,
+                               blank=True, null=True)
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
