@@ -13,15 +13,15 @@
         {% if request.user not in course.students.all %}
             <input onClick="location.href='{% url "courses:course_enroll" course.slug %}'" type="button" class="btn btn-success enroll-btn" value="Поступить">
         {% else %}
-            <input onClick="location.href='#'" type="button" class="btn enroll-btn review-btn" value="Оставить отзыв">
+            <input onClick="location.href='#'" type="button" class="btn btn-warning enroll-btn" value="Оставить отзыв">
         {% endif %}
-    </div> {% comment %} Если я уже поступил на курс, не отображать кнопку поступления {% endcomment %}
+    </div>
     <div class="course-detail-right">
         <h3>Содержание курса</h3>
         <ul class="lesson-list">  {% comment %} Добавить еще возможность добавления в закладки и просмотр отзывов {% endcomment %}
             {% for lesson in course.lessons.all %}
             <li class="lesson-item">
-                <a href="#">{{ lesson.order }}. {{ lesson.title }}</a>
+                <a href="{% url 'courses:lesson_detail' lesson.slug %}">{{ lesson.order }}. {{ lesson.title }}</a>
             </li>
             {% endfor %}
         </ul>

@@ -4,7 +4,7 @@
 {% block title %}Каталог курсов - DevLearn{% endblock title %}
 
 {% block content %}
-    <img src="vk_logo_icon_147212.png" alt="VK">
+    <img src="media/vk_logo_icon_147212.png" alt="VK">
     <div class="course-container">
         {% for course in courses %}
             <div class="course-item" onClick="location.href='{% url "courses:course_detail" course.slug %}'">

@@ -15,7 +15,6 @@ class Lesson(models.Model):
 
     order = fields.OrderField(blank=True, for_fields='course')
     body = models.TextField(blank=True, null=True)
-    # completed = models.BooleanField(default=False)
 
     video = EmbedVideoField(blank=True, null=True)
 
@@ -39,7 +38,6 @@ class Course(models.Model):
     slug = models.SlugField(max_length=80, unique=True)
     preview = models.ImageField(upload_to='course_previews/',
                                 blank=True, null=True, db_index=True)
-    # completed = models.BooleanField(default=False)
 
     description = models.TextField(max_length=255, blank=True, null=True)
 
@@ -52,7 +50,7 @@ class Course(models.Model):
         return f'{self.title} от {self.owner.username}'
 
 
-class UserCourseRelation(models.Model):
+class UserCourseRelation(models.Model):  # мб нужны будут черновики курса?
     RATING_CHOICES = (
         (1, 1),
         (2, 2),
@@ -61,18 +59,31 @@ class UserCourseRelation(models.Model):
         (5, 5),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # related name?
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    completed = models.BooleanField(default=False)
 
     enrolled = models.BooleanField(default=False)
     like = models.BooleanField(default=False)
     in_bookmarks = models.BooleanField(default=False)  # "хочу пройти"
     rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
                                             blank=True, null=True)
-    comment = models.TextField(max_length=250, default=None,
+    comment = models.TextField(max_length=250, default=None,  # review?
                                blank=True, null=True)
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
 
-# мб нужны будут черновики курса? Его же не за один присест создают...
+
+class UserLessonRelation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+
+    completed = models.BooleanField(default=False)
+    like = models.BooleanField(default=False)
+    comment = models.TextField(max_length=250, default=None,
+                               blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f'Пользователь {self.user.username} изучает урок {self.lesson.title}'
