@@ -50,7 +50,7 @@
         window.addEventListener('load', () => {
             let ul = document.querySelector('.list-group');
             for (let children of ul.children) {
-                fetch(`is_completed/${children.dataset.lessonSlug}`)
+                fetch(`http://127.0.0.1:8000/lesson-relation/${children.dataset.lessonSlug}`)  // Только вот надо передать id, ща посмотрим
                 .then(response => {
                     if (response.ok) {
                         if (response.is_completed == 'True') {

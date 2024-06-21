@@ -16,6 +16,14 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path, include
+from rest_framework.routers import DefaultRouter
+from courses.api import views
+
+router = DefaultRouter()
+
+router.register(r'lesson', views.LessonViewSet)
+router.register(r'lesson-relation', views.UserLessonRelationViewSet)
+router.register(r'course', views.CourseViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +31,8 @@ urlpatterns = [
     path('', include('courses.urls')),
     # re_path('social-auth', include('social_django.urls', namespace='social')),
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     import debug_toolbar
