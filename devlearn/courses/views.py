@@ -1,25 +1,38 @@
 from django.shortcuts import render, redirect
 from .models import Course, UserCourseRelation, Lesson, UserLessonRelation
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+
+
+def is_lesson_completed_check_view(request, slug):  # чтоб такой хуйней не заниматься - создаю rest api
+    lesson = Lesson.objects.get(slug=slug)
+    user_lesson, _ = UserLessonRelation.objects.get_or_create(user=request.user, lesson=lesson)
+    user_lesson_completed = user_lesson.completed
+    return JsonResponse({'success': True, 'is_completed': user_lesson_completed})
 
 
 def lesson_completed_view(request, slug):
     lesson = Lesson.objects.get(slug=slug)
-    user_lesson = UserLessonRelation.objects.get(user=request.user, lesson=lesson)
-    user_lesson.completed = not user_lesson.completed
+    user_lesson, _ = UserLessonRelation.objects.get_or_create(user=request.user, lesson=lesson)
+    user_lesson.completed = True
+    user_lesson.save()
     return redirect('courses:lesson_detail', slug)
 
 
 def lesson_detail_view(request, slug):
     lesson = Lesson.objects.get(slug=slug)
-    return render(request, 'lessons/detail.html', {'lesson': lesson})
+    user_lessons = {ul.lesson.id: ul for ul in UserLessonRelation.objects.filter(
+        user=request.user, lesson__course=lesson.course)}
+
+    return render(request, 'lessons/detail.html', {'lesson': lesson, 'user_lessons': user_lessons})
 
 
 def courses_list_view(request):
     search_query = request.GET.get('search', '')  # по дефолту ''
 
     if search_query:
-        courses = Course.objects.filter(title__icontains=search_query)
+        courses = Course.objects.filter(title__icontains=search_query,
+                                        owner__username__icontains=search_query)
     else:
         courses = Course.objects.all()
 

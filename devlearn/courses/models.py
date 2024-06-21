@@ -82,8 +82,21 @@ class UserLessonRelation(models.Model):
 
     completed = models.BooleanField(default=False)
     like = models.BooleanField(default=False)
-    comment = models.TextField(max_length=250, default=None,
-                               blank=True, null=True)
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} изучает урок {self.lesson.title}'
+
+
+# class Comment(models.Model):
+#     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
+#                                related_name='comments', null=True, blank=True)
+#     course = models.ForeignKey(Course, on_delete=models.CASCADE,
+#                                related_name='comments', null=True, blank=True)
+#     comment = models.TextField(max_length=250)
+#     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+#     created = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         if self.lesson:
+#             return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
+#         return f'{self.user.username} Комментирует Курс {self.course}: {self.comment}'

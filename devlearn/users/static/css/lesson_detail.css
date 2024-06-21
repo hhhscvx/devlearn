@@ -2,6 +2,10 @@
   background-color: rgb(148, 148, 236);
 }
 
+.is_completed {
+  background-color: green;
+}
+
 .scroll {
   overflow-y: scroll; /* прокрутка по вертикали */
   max-height: 800px;

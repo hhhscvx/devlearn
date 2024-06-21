@@ -8,10 +8,12 @@ app_name = 'courses'
 
 urlpatterns = [
     path('courses/', views.courses_list_view, name='course_list'),
-    path('course/<slug:slug>', views.course_detail_view, name='course_detail'),
-    path('course/<slug:slug>/enroll', views.user_enroll_to_course_view, name='course_enroll'),
+    path('course/<slug:slug>/', views.course_detail_view, name='course_detail'),
+    path('course/<slug:slug>/enroll/', views.user_enroll_to_course_view, name='course_enroll'),
 
-    path('lesson/<slug:slug>', views.lesson_detail_view, name='lesson_detail'),
+    path('lesson/<slug:slug>/', views.lesson_detail_view, name='lesson_detail'),
+    path('lesson/<slug:slug>/complete', views.lesson_completed_view, name='lesson_completed'),
+    path('lesson/is_completed/<slug:slug>', views.is_lesson_completed_check_view, name='is_lesson_completed'),
 ]
 
 if settings.DEBUG:

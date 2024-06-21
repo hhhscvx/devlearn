@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
     'taggit',
     'embed_video',
-    #'social_django',
+    # 'social_django',
 
     'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
@@ -149,3 +149,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SOCIAL_AUTH_GITHUB_KEY = 'Ov23ctyqrKQNz0BsmEBd'
 # SOCIAL_AUTH_GITHUB_SECRET = '3f33568e679f9001a9b2980e19479c2580c89e61'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+if DEBUG and not os.getenv('TESTING', 'False') == 'True':
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
