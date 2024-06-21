@@ -13,7 +13,6 @@ urlpatterns = [
 
     path('lesson/<slug:slug>/', views.lesson_detail_view, name='lesson_detail'),
     path('lesson/<slug:slug>/complete', views.lesson_completed_view, name='lesson_completed'),
-    path('lesson/is_completed/<slug:slug>', views.is_lesson_completed_check_view, name='is_lesson_completed'),
 ]
 
 if settings.DEBUG:

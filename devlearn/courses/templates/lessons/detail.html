@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% load embed_video_tags %}
+{% load dics_get %}
 
 {% block title %}{{ lesson.title }} - DevLearn{% endblock title %}
 
 {% block content %}
     <div class="row">
-        <!-- Sidebar with lesson list -->
         <div class="col-md-3">
             <h4>Уроки курса</h4>
-            <ul class="list-group">
+            <ul class="list-group scroll">
                 {% for other_lesson in lesson.course.lessons.all %}
-                    <li data-lessonSlug="{{ other_lesson.slug }}" onClick="location.href='{% url "courses:lesson_detail" other_lesson.slug %}'" class="list-group-item {% if other_lesson == lesson %}is_active{% endif %}">
-                        <span>
+                    <li style="cursor: pointer;" onClick="location.href='{% url "courses:lesson_detail" other_lesson.slug %}'"
+                    class="list-group-item {% if user_lessons|check_completed:other_lesson.id %}is_completed{% endif %}">
+                        <span class="{% if other_lesson == lesson %}is_active{% endif %}">
                             {{ other_lesson.order }}. {{ other_lesson.title|truncatechars:70 }}
                         </span>
                     </li>
@@ -46,21 +47,28 @@
             </div>
         </div>
     </div>
-    <script>
+    {% comment %} <script> ахахаха это самая медленная хуйня которую я делал
         window.addEventListener('load', () => {
             let ul = document.querySelector('.list-group');
             for (let children of ul.children) {
-                fetch(`http://127.0.0.1:8000/lesson-relation/${children.dataset.lessonSlug}`)  // Только вот надо передать id, ща посмотрим
+                fetch(`http://127.0.0.1:8000/lesson-relation/${children.dataset.lessonid}`)
                 .then(response => {
                     if (response.ok) {
-                        if (response.is_completed == 'True') {
+                        return response.json();
+                        if (response.completed == true) {
+                            console.log('Он тру')
                             children.classList.add('is_completed')
                         }
                     } else {
                         console.error("Ошибка при получении статуса курса");
                       }
                 })
+                .then(data => {
+                    if (data.completed == true) {
+                        children.classList.add('is_completed')
+                    }
+                })
             }
         })
-    </script>
+    </script> {% endcomment %}
 {% endblock content %}

@@ -1,14 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Course, UserCourseRelation, Lesson, UserLessonRelation
 from django.core.paginator import Paginator
-from django.http import JsonResponse
-
-
-def is_lesson_completed_check_view(request, slug):  # чтоб такой хуйней не заниматься - создаю rest api
-    lesson = Lesson.objects.get(slug=slug)
-    user_lesson, _ = UserLessonRelation.objects.get_or_create(user=request.user, lesson=lesson)
-    user_lesson_completed = user_lesson.completed
-    return JsonResponse({'success': True, 'is_completed': user_lesson_completed})
 
 
 def lesson_completed_view(request, slug):
