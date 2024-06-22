@@ -150,19 +150,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SOCIAL_AUTH_GITHUB_KEY = 'Ov23ctyqrKQNz0BsmEBd'
 # SOCIAL_AUTH_GITHUB_SECRET = '3f33568e679f9001a9b2980e19479c2580c89e61'
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
-
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-if DEBUG and not os.getenv('TESTING', 'False') == 'True':
-    INSTALLED_APPS += [
-        'debug_toolbar',
-    ]
-    MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ]
+LOGGING = {
+    "version": 1,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler"
+        }
+    },
+    "loggers": {
+        'django.db.backends': {
+            "handlers": ["console"],
+            "level": "DEBUG"
+        }
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
@@ -173,3 +174,5 @@ REST_FRAMEWORK = {
     ),
     # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+CELERY_BROKER_URL = 'redis://redis:6379'

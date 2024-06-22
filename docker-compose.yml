@@ -27,6 +27,44 @@ services:
       - POSTGRES_DB=devlearn
       - POSTGRES_USER=devlearner
       - POSTGRES_PASSWORD=05081992
+  
+  redis:
+    image: redis:7.2.5-alpine
+    hostname: redis
+  
+  worker:
+    build:
+      context: .
+    hostname: worker
+    entrypoint: celery
+    command: -A celery_app.app worker -l info -E
+    volumes:
+      - ./devlearn:/devlearn
+    links:
+      - redis
+    depends_on:
+      - redis
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devlearn
+      - DB_USER=devlearner
+      - DB_PASS=05081992
+  
+  flower:
+    build:
+      context: .
+    entrypoint: celery
+    command: -A celery_app.app flower
+    volumes:
+      - ./devlearn:/devlearn
+    links:
+      - redis
+    depends_on:
+      - redis
+    ports:
+      - "5555:5555"
+
 
 volumes:
   postgres_data:

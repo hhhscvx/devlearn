@@ -4,6 +4,7 @@ from embed_video.fields import EmbedVideoField
 from django.contrib.auth.models import User
 
 from .services import fields
+from .tasks import set_rating
 
 
 class Lesson(models.Model):
@@ -32,7 +33,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='courses',
                                       through="UserCourseRelation")
 
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)  # discount?????
 
     title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, unique=True)
@@ -43,14 +44,14 @@ class Course(models.Model):
 
     released = models.DateField(auto_now_add=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2,
-                                 default=None, null=True, blank=True)
+                                 default=0.00)
     tags = TaggableManager()
 
     def __str__(self) -> str:
         return f'{self.title} от {self.owner.username}'
 
 
-class UserCourseRelation(models.Model):  # мб нужны будут черновики курса?
+class UserCourseRelation(models.Model):  # Celery: получить курс и вернуть курс
     RATING_CHOICES = (
         (1, 1),
         (2, 2),
@@ -74,6 +75,17 @@ class UserCourseRelation(models.Model):  # мб нужны будут черно
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
+
+    def __init__(self, *args, **kwargs):
+        super(UserCourseRelation, self).__init__(*args, **kwargs)
+        self.old_rate = self.rate
+
+    def save(self, *args, **kwargs):
+        create = not self.pk
+
+        super().save(*args, **kwargs)
+        if not (self.rate == self.old_rate) or create:
+            set_rating.delay(self.course.id)
 
 
 class UserLessonRelation(models.Model):

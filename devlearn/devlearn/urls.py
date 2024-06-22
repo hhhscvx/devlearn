@@ -15,7 +15,7 @@ Including another URLconf
 '''
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, re_path, include
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from courses.api import views
 
@@ -34,9 +34,3 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls))
-    ]

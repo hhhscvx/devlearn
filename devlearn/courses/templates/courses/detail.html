@@ -5,10 +5,12 @@
 {% block content %}
 <div class="course-detail-container">
     <div class="course-detail-left">
-        <figure>
-            <img src="{{ course.preview.url }}" alt="{{ course.title }}" class="course-preview">
-            <figcaption class="img-description">Выпущен {{ course.released }}</figcaption>
-        <figure>
+        {% if course.preview %}
+            <figure>
+                <img src="{{ course.preview.url }}" alt="{{ course.title }}" class="course-preview">
+                <figcaption class="img-description">Выпущен {{ course.released }}</figcaption>
+            <figure>
+        {% endif %}
         <div class="course-description">{{ course.description }}</div>
         {% if request.user not in course.students.all %}
             <input onClick="location.href='{% url "courses:course_enroll" course.slug %}'" type="button" class="btn btn-success enroll-btn" value="Поступить">
