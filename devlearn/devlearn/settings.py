@@ -130,7 +130,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "users" / "static",
 ]
 
 # Default primary key field type
@@ -176,3 +176,12 @@ REST_FRAMEWORK = {
 }
 
 CELERY_BROKER_URL = 'redis://redis:6379'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+    }
+}
+
+COURSE_CACHE = 'course_cache'

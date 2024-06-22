@@ -2,9 +2,12 @@ from django.db import models
 from taggit.managers import TaggableManager
 from embed_video.fields import EmbedVideoField
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
 
 from .services import fields
+from .services.delete_all_cache import course_cache_delete
 from .tasks import set_rating
+from .receivers import delete_cache_after_course_delete
 
 
 class Lesson(models.Model):
@@ -49,6 +52,14 @@ class Course(models.Model):
 
     def __str__(self) -> str:
         return f'{self.title} от {self.owner.username}'
+    
+    class Meta:
+        ordering = ['-released']
+
+    def save(self, *args, **kwargs):
+        course_cache_delete()
+
+        return super().save(*args, **kwargs)
 
 
 class UserCourseRelation(models.Model):  # Celery: получить курс и вернуть курс
@@ -85,6 +96,7 @@ class UserCourseRelation(models.Model):  # Celery: получить курс и 
 
         super().save(*args, **kwargs)
         if not (self.rate == self.old_rate) or create:
+            course_cache_delete()
             set_rating.delay(self.course.id)
 
 
@@ -112,3 +124,5 @@ class UserLessonRelation(models.Model):
 #         if self.lesson:
 #             return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
 #         return f'{self.user.username} Комментирует Курс {self.course}: {self.comment}'
+
+post_delete.connect(delete_cache_after_course_delete, sender=Course)
