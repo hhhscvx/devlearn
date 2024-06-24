@@ -16,9 +16,20 @@ def lesson_completed_view(request, slug):
 
 
 def lesson_detail_view(request, slug):
-    lesson = Lesson.objects.get(slug=slug)
-    user_lessons = {ul.lesson.id: ul for ul in UserLessonRelation.objects.filter(   
-        user=request.user, lesson__course=lesson.course).prefetch_related(Prefetch('lesson', queryset=Lesson.objects.all().only('id')))}
+    lesson_cache_key = f'lesson_cache_{slug}'
+    lesson = cache.get(lesson_cache_key)
+    if not lesson:
+        lesson = Lesson.objects.get(slug=slug)
+        cache.set(lesson_cache_key, lesson, 10)
+        cache.set('lesson_detail_slug_cache', slug, 10)
+
+    user_lesson_cache_key = f'user_lesson_cache_{slug}'
+    user_lessons = cache.get(user_lesson_cache_key)
+    if not user_lessons:
+        user_lessons = {ul.lesson.id: ul for ul in UserLessonRelation.objects.filter(  # все уроки этого курса и проверка пройдены ли они (левый bar в lesson-detail)
+            user=request.user, lesson__course=lesson.course).select_related('lesson')}
+        cache.set(user_lesson_cache_key, user_lessons, 10)
+        cache.set('user_lesson_detail_slug_cache', slug, 10)
 
     return render(request, 'lessons/detail.html', {'lesson': lesson, 'user_lessons': user_lessons})
 
@@ -32,8 +43,8 @@ def courses_list_view(request):
     if not courses:
         if search_query:
             courses = Course.objects.filter(title__icontains=search_query,
-                                                owner__username__icontains=search_query
-                                                ).prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
+                                            owner__username__icontains=search_query
+                                            ).prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
             cache.set('course_cache_query', search_query, 60 * 60)
         else:
             courses = Course.objects.all().prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
@@ -49,7 +60,12 @@ def courses_list_view(request):
 
 
 def course_detail_view(request, slug):
-    course = Course.objects.get(slug=slug)
+    cache_key = f'course_detail_{slug}'
+    course = cache.get(cache_key)
+    if not course:
+        course = Course.objects.get(slug=slug)
+        cache.set('course_detail_slug_cache', slug, 60 * 60)
+        cache.set(cache_key, course, 60 * 60)
     return render(request,
                   'courses/detail.html',
                   {'course': course})

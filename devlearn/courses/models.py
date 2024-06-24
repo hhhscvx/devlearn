@@ -3,11 +3,13 @@ from taggit.managers import TaggableManager
 from embed_video.fields import EmbedVideoField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_delete
+from django.conf import settings
 
 from .services import fields
-from .services.delete_all_cache import course_cache_delete
+from .services.delete_all_cache import course_cache_delete, course_detail_cache_delete, lesson_detail_cache_delete
 from .tasks import set_rating
-from .receivers import delete_cache_after_course_delete
+from .receivers import delete_course_cache_after_course_delete, \
+    delete_course_and_lesson_detail_cache_after_course_delete, delete_course_and_lesson_detail_cache_after_lesson_delete
 
 
 class Lesson(models.Model):
@@ -26,7 +28,21 @@ class Lesson(models.Model):
         return f'{self.course.title}. Урок {self.order}. {self.title}'
 
     class Meta:
-        ordering = ['order']  # сортируем уроки по очереди
+        ordering = ['order']
+
+    def __init__(self, *args, **kwargs):
+        super(Lesson, self).__init__(*args, **kwargs)
+        self.old_title = self.title
+        self.old_order = self.order
+
+    def save(self, *args, **kwargs):
+        create = not self.id
+        
+        if (self.title != self.old_title) or (self.order != self.order) or create:
+            course_detail_cache_delete()
+        lesson_detail_cache_delete()
+
+        return super().save(*args, **kwargs)
 
 
 class Course(models.Model):
@@ -52,12 +68,13 @@ class Course(models.Model):
 
     def __str__(self) -> str:
         return f'{self.title} от {self.owner.username}'
-    
+
     class Meta:
         ordering = ['-released']
 
     def save(self, *args, **kwargs):
         course_cache_delete()
+        course_detail_cache_delete()
 
         return super().save(*args, **kwargs)
 
@@ -93,6 +110,7 @@ class UserCourseRelation(models.Model):  # Celery: получить курс и 
 
     def save(self, *args, **kwargs):
         create = not self.pk
+        course_detail_cache_delete()
 
         super().save(*args, **kwargs)
         if not (self.rate == self.old_rate) or create:
@@ -110,6 +128,10 @@ class UserLessonRelation(models.Model):
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} изучает урок {self.lesson.title}'
 
+    def save(self, *args, **kwargs):
+        lesson_detail_cache_delete()
+        super().save(*args, **kwargs)
+
 
 # class Comment(models.Model):
 #     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
@@ -125,4 +147,6 @@ class UserLessonRelation(models.Model):
 #             return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
 #         return f'{self.user.username} Комментирует Курс {self.course}: {self.comment}'
 
-post_delete.connect(delete_cache_after_course_delete, sender=Course)
+post_delete.connect(delete_course_cache_after_course_delete, sender=Course)
+post_delete.connect(delete_course_and_lesson_detail_cache_after_course_delete, sender=Course)
+post_delete.connect(delete_course_and_lesson_detail_cache_after_lesson_delete, sender=Lesson)

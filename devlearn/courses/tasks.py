@@ -3,7 +3,7 @@ from celery_singleton import Singleton
 from django.db.models import Avg
 from django.core.cache import cache
 from django.conf import settings
-from .services.delete_all_cache import course_cache_delete
+from .services.delete_all_cache import course_cache_delete, course_detail_cache_delete
 
 
 @shared_task(base=Singleton)
@@ -18,3 +18,4 @@ def set_rating(course_id):
         course.rating = 0.0
     course.save()
     course_cache_delete()
+    course_detail_cache_delete()
