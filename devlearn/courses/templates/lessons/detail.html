@@ -28,7 +28,7 @@
                 {% video lesson.video as my_video %}
                     {% video my_video '960x540' %}
                 {% endvideo %}
-                <div class="mt-4">{{ lesson.body }}</div>
+                <div class="mt-4" style="text-align: left; margin-left: 200px;">{{ lesson.body|linebreaks }}</div>
 
                 <!-- Mark lesson as completed button -->
                 <div class="mt-3">

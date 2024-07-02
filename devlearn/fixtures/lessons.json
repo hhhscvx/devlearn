@@ -1,0 +1,386 @@
+[
+    {
+        "model": "courses.lesson",
+        "pk": 1,
+        "fields": {
+            "course": 1,
+            "title": "О курсе",
+            "slug": "about-course",
+            "order": 0,
+            "body": "Это будет лучший курс всех времен по Оптимизации Django",
+            "video": "https://www.youtube.com/watch?v=zqZ274uIDbY"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 2,
+        "fields": {
+            "course": 2,
+            "title": "Установка Linux на комп с Windows",
+            "slug": "ustanovka-linux-na-komp-s-windows",
+            "order": 1,
+            "body": "#linux #линукс #линуксснуля #ityoutubersru\r\nLinux - Установка Linux на комп с Windows используя VirtualBox\r\n\r\nРазные версии Linux можно скачать от сюда:\r\nLinux Ubuntu: https://www.ubuntu.com/\r\nLinux Kali: https://www.kali.org/\r\nLinux Mint: https://www.linuxmint.com/\r\nLinux Fedora: https://getfedora.org/\r\nLinux openSuse: https://www.opensuse.org/\r\nLinux CentOS: https://www.centos.org/\r\nLinux Red Hat: https://www.redhat.com\r\n\r\nПрограммы Виртуализации можно скачать тут:\r\nVirualBox: https://www.virtualbox.org/\r\nVMWare Player: http://www.vmware.com/products/player...\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=fAHpGshMCgQ&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=1"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 3,
+        "fields": {
+            "course": 2,
+            "title": "Обзор Графического Интерфейса GUI",
+            "slug": "obzor-graficheskogo-interfejsa-gui",
+            "order": 2,
+            "body": "Linux для Начинающих - Обзор Графического Интерфейса GUI\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=wdaHKwvNRuU&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=2"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 4,
+        "fields": {
+            "course": 2,
+            "title": "Работа с Терминалом, первые команды",
+            "slug": "rabota-s-terminalom-pervye-komandy",
+            "order": 3,
+            "body": "Linux для Начинающих - Работа с Терминалом\r\n\r\nman – помощь\r\ninfo – тоже помощь\r\nuptime  - время с последнего включения\r\nlscpu – данные процессора\r\nwhatis – показывает что делает комманда\r\nwhereis – показывает где файл\r\nlocate – показывает где файл\r\nls   - показать что в этой директории\r\nls –la –R  /    - показать все на компутере\r\nCtrl+Z  - отправить процесс на background\r\nCtrl+C – прекратить процесс вообще\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=jP2dsNqXeYU&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=3"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 5,
+        "fields": {
+            "course": 2,
+            "title": "Навигация по файлам и директориям",
+            "slug": "navigaciya-po-fajlam-i-direktoriyam",
+            "order": 4,
+            "body": "Linux для Начинающих - Навигация по файлам и директориям\r\n\r\ncd  - сменить директорию\r\nls – вывести содержимое директории\r\npwd – вывести путь где мы сейчас\r\n~    - сокращение нашей Home директории\r\n/    - коренная директория Linux\r\n..    - директория которая выше \r\n.     - директория где мы сейчас\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=qoEWSWw6ErM&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=4"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 6,
+        "fields": {
+            "course": 2,
+            "title": "создание, копирование, перенос, переименование, стерание файлов",
+            "slug": "sozdanie-kopirovanie-perenos-pereimenovanie-steranie-fajlov",
+            "order": 5,
+            "body": "touch – создать файл или обновить время\r\ncp  - скопировать файл\r\nmv – перенести файл или переименовать\r\nrm – стереть файл\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=GZkeTXzMGh0&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=5"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 7,
+        "fields": {
+            "course": 2,
+            "title": "Работа с Директориями и самая опасная комманда Линукса",
+            "slug": "rabota-s-direktoriyami-i-samaya-opasnaya-kommanda-linuksa",
+            "order": 6,
+            "body": "mkdir – создать директорию\r\nrmdir – стереть пустую директорию\r\ncp     - копировать директорию\r\nmv  - переименовать или перенести директорию\r\n\r\nrm –R   – стереть не пустую директорию со всем что внутри\r\n\r\nsudo rm –R  /   - замочить систему Linux\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=e8LFF-aG6UM&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=6"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 8,
+        "fields": {
+            "course": 2,
+            "title": "Создание Линков",
+            "slug": "sozdanie-linkov",
+            "order": 7,
+            "body": "Linux для Начинающих - Создание Линков\r\n\r\nСоздание символичных линков и дубликатов.\r\n\r\nln   - создать дубликат файла \r\nln –s   - создать symbolic линк на файл или директорию типа Shortcut\r\n\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=cEcRALg05a8&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=7"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 9,
+        "fields": {
+            "course": 2,
+            "title": "Команды: find, cut, sort, wc",
+            "slug": "komandy-find-cut-sort-wc",
+            "order": 8,
+            "body": "Linux для Начинающих - Команды: find, cut, sort, wc\r\n\r\nfind  - найти файл\r\nwc  - вывести количество строк, слов, байт\r\ncut – вывести определенное поле из текста\r\nsort – вывести отсортированный текст\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=S4TjfU_ivpY&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=8"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 10,
+        "fields": {
+            "course": 2,
+            "title": "Комманда grep и Регулярные Выражения",
+            "slug": "kommanda-grep-i-regulyarnye-vyrazheniya",
+            "order": 9,
+            "body": "Linux для Начинающих - Комманда grep и Регулярные Выражения\r\n\r\ngrep  - поиск определонного слова в файле            и вывод строк с этим словом\r\n\r\nРегулярные Выражения:\r\n[A-Z]*  - любое слово из больших букв\r\n[0-9]*   - сколько угодно подряд стоящих цифр    \r\n[A-Za-z]*@[A-Za-z]*.com   – простое выражение емайлов с окончанием .com\r\nwww\\.[a-z]*\\.com  - любой вэб адресс  с окончанием .com\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=Y1fjIG7S_F0&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=9"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 11,
+        "fields": {
+            "course": 2,
+            "title": "Перенаправление вывода / ввода - /dev/null",
+            "slug": "perenapravlenie-vyvoda-vvoda-devnull",
+            "order": 10,
+            "body": "Linux для Начинающих - Перенаправление вывода ввода\r\n\r\n/dev/null   - устройство находящиеся в ж#$е\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=tMofCc4RX1k&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=10"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 12,
+        "fields": {
+            "course": 2,
+            "title": "Архивирование и Сжатие tar, gzip, bzip2, xz, zip",
+            "slug": "arhivirovanie-i-szhatie-tar-gzip-bzip2-xz-zip",
+            "order": 11,
+            "body": "Linux для Начинающих - Архивирование и Сжатие tar, gzip, bzip2, xz, zip\r\n\r\ntar cf  mytar.tar  Folder1   - заархивировать Folder1\r\ntar xf mytar.tar  - разархивировать архив\r\ngzip     / bzip2     / xz      – скомпрессировать файл\r\ngunzip /  bunzip2 / unxz  – раскомпресировать файл\r\n\r\ntar cvzf myBZIP2.bz2  Folder1    – сжать Folder1\r\ntar xvf  myBZIP2.bz2                  - распаковать архив\r\ntar tf myBZIP2.bz2    - посмотреть что внутри архива\r\n\r\nzip –r myZIP.zip Folder1   - Запаковать Folder1 в ZIP\r\nunzip myZIP.zip                - Распаковать файл myZIP.zip\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=gfFfC0mwnuY&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=11"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 13,
+        "fields": {
+            "course": 2,
+            "title": "Процессы и Память: top, free, ps",
+            "slug": "processy-i-pamyat-top-free-ps",
+            "order": 12,
+            "body": "Linux для Начинающих - Процессы и Память\r\n\r\ntop – как Task Manager в Windows\r\nfree  - показать состояние памяти в байтах\r\nfree –h  - показать состояние памяти в MB, GB\r\nps          -  показать мои процессы \r\nps aux  - показать все процессы от всех пользователей\r\n\r\nps aux | grep bash  - найти все процессы bash от всех пользователей\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=wvIbZh4KCeE&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=12"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 14,
+        "fields": {
+            "course": 2,
+            "title": "Редактирование Файлов: vim, pico, nano",
+            "slug": "redaktirovanie-fajlov-vim-pico-nano",
+            "order": 13,
+            "body": "vi или vim  - самы старый и дурацкий редактор\r\npico  - новый редактов\r\nnano – самый новый редактор\r\n\r\ngedit – как и Notepad в Windows, работает только  если есть графический интерфейс\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=eJoigT1EACk&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=13"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 15,
+        "fields": {
+            "course": 2,
+            "title": "Типы аккаунтов и важные файлы",
+            "slug": "tipy-akkauntov-i-vazhnye-fajly",
+            "order": 14,
+            "body": "sudo  - запустить комманду используя Super User права\r\nsu   - сменить текушего пользователя\r\n\r\n/etc/passwd    - тут хранятся все аккаунты\r\n/etc/shadow   - тут хранятся все пароли аккаунтов\r\n/etc/group    - тут хранятся все группы\r\n\r\nwhoami  - показать имя текущего пользователя\r\nid   - показать к каким группам принадлежит пользователь\r\nwho – показать кто сейчас в системе\r\nw   - показать кто сейчас в системе и что делает\r\nlast – показать последние логины\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=Hu581E-Wqys&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=14"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 16,
+        "fields": {
+            "course": 2,
+            "title": "Пользователи и Группы",
+            "slug": "polzovateli-i-gruppy",
+            "order": 15,
+            "body": "useradd  -m vasya   - создать юзера vasya с домашней  директорией\r\nuserdel –r vasya     - стереть юзера vasya с его домашней  директорией\r\n/etc/skel    -  это шаблон домашней директории\r\npasswd vasya   - изменить пароль для юзера vasya\r\n\r\ngroupadd Programmers  - создать группу Programmers\r\ngroupdel Programmers  - стереть группу Programmers\r\n\r\nusermod –aG Programmers vasya  - добавить юзера vasya в группу Programmers\r\ndeluser vasya Programmers  - удалить юзера vasya  из групы Programmers\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=RZ7D_70JEC4&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=15"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 17,
+        "fields": {
+            "course": 2,
+            "title": "Права Доступа и владения файлами и директориями",
+            "slug": "prava-dostupa-i-vladeniya-fajlami-i-direktoriyami",
+            "order": 16,
+            "body": "chown – изменить владельца файла / директории\r\nchgrp – изменить группу файла / директории\r\nсhmod – изменить права доступа на файл / директорию\r\n\r\nchmod  ugo+x  myfile.txt   довавить X всем\r\nсhmod  g-rw   myfile.txt   убрать RW у группы\r\nchmod  o=rw   myfile.txt   установить RW всем остальным\r\n u = user\r\n g = group\r\n o = other\r\n a = ugo\r\n\r\n\r\nchmod  777   myfile.txt   установить RWX всем\r\nchmod  741   myfile.txt  установить:   RWX   владельцу, R - -    группе,  - - X   всем остальным\r\nr = 4\r\nw = 2\r\nx = 1\r\n\r\nchmod  1777 myDir    включить StickyBit\r\nchmod 0777 myDir    выключить StickyBit\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=dR4DIo7HYoU&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=16"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 18,
+        "fields": {
+            "course": 2,
+            "title": "Сетевые комманды",
+            "slug": "setevye-kommandy",
+            "order": 17,
+            "body": "ifconfig          - показать мой IP адресс\r\nip addr show  - показать мой IP адресс\r\n\r\nroute      - показать адресс раутера Gateway\r\nping        - протестировать коннекшен к адрессу\r\nhost       - дать IP адресс вэб сайта\r\ndig         - дать IP адресс вэб сайта\r\nnetstat  – выдать сетевые подключения компьютера\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=MjItfiOG0cs&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=17"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 19,
+        "fields": {
+            "course": 2,
+            "title": "Скачивание и Установка программ",
+            "slug": "skachivanie-i-ustanovka-programm",
+            "order": 18,
+            "body": "Linux для Начинающих - Скачивание и Установка программ\r\n\r\nwget    - скачать файл из интернета\r\n\r\nUbuntu/Debian/Kali/Mint Linux:\r\n~~~~~~~~~~~~~~~~~~~~~\r\napt-get install     - скачать и установить программу\r\napt-get remove   - удалить программу\r\ndpkg –i                - установить программу из файла .deb\r\ndpkg –r                - удалить программу\r\n\r\nRedHat/CentOS/Amazon Linux:\r\n~~~~~~~~~~~~~~\r\nyum install          - скачать и установить программу\r\nyum remove         - удалить программу\r\nrpm –i                  - установить программу из файла .rpm\r\nrpm –e                 - удалить программу\r\n\r\nФайл .deb из урока\r\nhttp://mirrors.kernel.org/ubuntu/pool...\r\n\r\nФайл .rpm из урока\r\nhttps://sourceforge.net/projects/neth...\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=O9EeexehSTw&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=18"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 20,
+        "fields": {
+            "course": 2,
+            "title": "Скрипты Linux Bash, Часть-1",
+            "slug": "skripty-linux-bash-chast-1",
+            "order": 19,
+            "body": "./myscript.sh  Vasya  Petya  Kolya\r\n\r\n$0 при этом равен  ./myscript.sh\r\n$1 при этом равен Vasya\r\n$2 при этом равен Petya\r\n$3 при этом равен Kolya\r\n\r\nmyOS=`uname –a`   - запускает uname –a и сохраняет  результат в переменную myOS\r\n\r\nСохранить ввод пользователя в переменную name:\r\nread –p “Please enter your name: “ name\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=qZjnr66Cys4&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=19"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 21,
+        "fields": {
+            "course": 2,
+            "title": "Скрипты Linux Bash, Часть-2",
+            "slug": "skripty-linux-bash-chast-2",
+            "order": 20,
+            "body": "Использование связки\r\nIF-ELIF-ELSE-FI\r\n\r\nИспользование CASE\r\n\r\nЦиклы FOR с коммандой Linux\r\nЦиклы FOR с цифровым промежутке\r\nЦиклы FOR как в С, C++, Java\r\nЦиклы WHILE\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=s6OOqqrdzFI&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=20"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 22,
+        "fields": {
+            "course": 2,
+            "title": "Экзамен LPI Linux Essentials",
+            "slug": "ekzamen-lpi-linux-essentials",
+            "order": 21,
+            "body": "Обзор и рекоммендации о экзамене сертификации LPI Linux Essentials\r\n\r\nLPI - Linux Professional Institute тут: www.lpi.org\r\nЗапись на экзамен тут: http://www.pearsonvue.com/lpi/\r\n\r\nИщите dump с 80-ю вопросами, там реальные вопросы из экзамена которые у вас будут.\r\n\r\n\r\n\r\nБуду рад паре баксов, можно даже Канадских :) https://www.paypal.me/DenisAstahov",
+            "video": "https://www.youtube.com/watch?v=ztOyQXiBin0&list=PLg5SS_4L6LYuE4z-3BgLYGkZrs-cF4Tep&index=21"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 23,
+        "fields": {
+            "course": 1,
+            "title": "Django + Docker",
+            "slug": "django-docker",
+            "order": 1,
+            "body": "00:00 Про Docker и зачем он нужен \r\n04:29 Установка и настройка Docker \r\n06:38 Скачиваем Git и PyCharm \r\n07:26 создаем репозиторий в GitHub \r\n10:36 создание Django проекта в Docker \r\n13:02 Создаем базовый image в Dockerfile \r\n19:19 Пишем docker-compose файл \r\n25:35 docker-compose build\r\n28:18 django-admin startproject через docker-compose\r\n29:22 docker-compose up \r\n30:36 git commit / push через PyCharm \r\n31:30 Подключаем Postgres к приложению Django через Docker \r\n40:24 Подключаем второй интерпретатор к PyCharm \r\n42:18 Устанавливаем psycopg2 и postgresql-client в Docker\r\n44:57 Применяем manage.py migrate в docker-compose\r\n46:10 manage.py createsuperuser в docker-compose\r\n47:27 Docker Desktop\r\n49:00 Резюме этого видео",
+            "video": "https://www.youtube.com/watch?v=XEjJpGv5BsY&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=2"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 24,
+        "fields": {
+            "course": 1,
+            "title": "проектирование приложения Django + DRF View API endpoint",
+            "slug": "proektirovanie-prilozheniya-django-drf-view-api-endpoint",
+            "order": 2,
+            "body": "00:00 вступление \r\n01:13 django startapp в docker - создаем приложения\r\n03:34 создаем модели для джанго , проектируем приложение \r\n16:52 manage.py makemigrations , migrate \r\n19:51 django admin register models \r\n22:22 создаем тестовые данные \r\n26:07 git commit , git push \r\n27:04 Django REST Framework DRF ModelViewSet , queryset \r\n28:11 создаем serializers.ModelSerializer \r\n33:25 urls.py пишем урл , router \r\n36:24 API endpoint",
+            "video": "https://www.youtube.com/watch?v=jCx0n7LKSD0&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=3"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 25,
+        "fields": {
+            "course": 1,
+            "title": "Оптимизация ORM-query",
+            "slug": "optimizaciya-orm-query",
+            "order": 3,
+            "body": "00:00 про ORM и SQL\r\n02:15 как логировать SQL query \r\n07:20 находим источники SQL запросов в коде \r\n12:30 делаем prefetch_related \r\n17:43 класс Prefetch для ORM\r\n20:25 select_related\r\n24:25 делаю git commit и git push \r\n24:43 добавляем вложенный сериализатор \r\n27:15 устраняем проблему n+1\r\n31:25 на что обратить внимание при разработке view",
+            "video": "https://www.youtube.com/watch?v=qy5TQDmW-K4&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=4"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 26,
+        "fields": {
+            "course": 1,
+            "title": "Annotate и Aggregate в ORM. Вычисления в базе",
+            "slug": "annotate-i-aggregate-v-orm-vychisleniya-v-baze",
+            "order": 4,
+            "body": "00:00 Вступление\r\n01:02 пишем бизнес-логику приложения \r\n04:35 SerializerMethodField\r\n05:42 смотрим SQL запросы \r\n07:51 вычисляем в базе через annotate и смотрим запросы\r\n13:25 INNER JOIN которые нам сделала Django ORM \r\n14:41 когда не нужно вычислять в базе \r\n16:45 Пишем aggregate Sum, переопределяем list во view и дополняем response\r\n26:08 смотрим какие формируются SQL запросы",
+            "video": "https://www.youtube.com/watch?v=3Pm43eo56r8&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=5"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 27,
+        "fields": {
+            "course": 1,
+            "title": "Celery + Docker",
+            "slug": "celery-docker",
+            "order": 5,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=GYB2qBwNKnc&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=6"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 28,
+        "fields": {
+            "course": 1,
+            "title": "Celery таски - отложенный пересчет, SingleTone",
+            "slug": "celery-taski-otlozhennyj-pereschet-singletone",
+            "order": 6,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=SeC3jsNmomE&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=7"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 29,
+        "fields": {
+            "course": 1,
+            "title": "Параллельные celery таски и их проблемы",
+            "slug": "parallelnye-celery-taski-i-ih-problemy",
+            "order": 7,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=y7q_XcUEC9Y&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=8"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 30,
+        "fields": {
+            "course": 1,
+            "title": "Redis и ручной кеш",
+            "slug": "redis-i-ruchnoj-kesh",
+            "order": 8,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=wv3CIQH9u-E&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=9"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 31,
+        "fields": {
+            "course": 1,
+            "title": "DB Индексы",
+            "slug": "db-indeksy",
+            "order": 9,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=7856gvV2jo4&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=10"
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 32,
+        "fields": {
+            "course": 1,
+            "title": "Глобальное кеширование,  django-cachalot",
+            "slug": "globalnoe-keshirovanie-django-cachalot",
+            "order": 10,
+            "body": "",
+            "video": "https://www.youtube.com/watch?v=mH2XWYBvG_0&list=PLyaCd9XYVI9DQhzpYCNI9PAvf3U1EunVm&index=11"
+        }
+    }
+]

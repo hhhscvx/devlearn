@@ -1,0 +1,30 @@
+[
+    {
+        "model": "courses.course",
+        "pk": 1,
+        "fields": {
+            "owner": 8,
+            "price": 0,
+            "title": "Оптимизация Django",
+            "slug": "django-optimization",
+            "preview": "course_previews/django_optimization.jpg",
+            "description": "Курс по оптимизации работы с Django и такими инструментами как Docker, Redis, Celery и многое другое",
+            "released": "2024-06-18",
+            "rating": "5.00"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 2,
+        "fields": {
+            "owner": 11,
+            "price": 0,
+            "title": "Linux для Начинающих",
+            "slug": "linux-dlya-nachinayushih",
+            "preview": "course_previews/linuxessentials.jpg",
+            "description": "Отличный  практический курс по Linux, который сопровождается забавными и простыми объяснениями автора",
+            "released": "2024-06-19",
+            "rating": "5.00"
+        }
+    }
+]

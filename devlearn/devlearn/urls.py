@@ -19,19 +19,13 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from courses.api import views
 
-
 router = DefaultRouter()
-
-router.register(r'lesson', views.LessonViewSet)
-router.register(r'lesson-relation', views.UserLessonRelationViewSet)
-router.register(r'course', views.CourseViewSet)
-router.register(r'course-relation', views.UserCourseRelationViewSet)
+router.register(r'api/courses', views.CourseView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('', include('courses.urls')),
-    # re_path('social-auth', include('social_django.urls', namespace='social')),
 ]
 
 urlpatterns += router.urls

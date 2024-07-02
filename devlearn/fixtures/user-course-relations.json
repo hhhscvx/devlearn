@@ -1,0 +1,72 @@
+[
+    {
+        "model": "courses.usercourserelation",
+        "pk": 1,
+        "fields": {
+            "user": 7,
+            "course": 1,
+            "completed": false,
+            "enrolled": true,
+            "like": false,
+            "in_bookmarks": false,
+            "rate": 5,
+            "comment": ""
+        }
+    },
+    {
+        "model": "courses.usercourserelation",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "course": 1,
+            "completed": false,
+            "enrolled": true,
+            "like": false,
+            "in_bookmarks": false,
+            "rate": null,
+            "comment": null
+        }
+    },
+    {
+        "model": "courses.usercourserelation",
+        "pk": 5,
+        "fields": {
+            "user": 7,
+            "course": 2,
+            "completed": false,
+            "enrolled": true,
+            "like": false,
+            "in_bookmarks": false,
+            "rate": 5,
+            "comment": "Преподователь угарный, подача зашла)"
+        }
+    },
+    {
+        "model": "courses.usercourserelation",
+        "pk": 6,
+        "fields": {
+            "user": 12,
+            "course": 2,
+            "completed": false,
+            "enrolled": true,
+            "like": false,
+            "in_bookmarks": false,
+            "rate": null,
+            "comment": null
+        }
+    },
+    {
+        "model": "courses.usercourserelation",
+        "pk": 7,
+        "fields": {
+            "user": 12,
+            "course": 1,
+            "completed": false,
+            "enrolled": true,
+            "like": false,
+            "in_bookmarks": false,
+            "rate": null,
+            "comment": null
+        }
+    }
+]

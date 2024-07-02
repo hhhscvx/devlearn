@@ -1,0 +1,162 @@
+[
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 1,
+        "fields": {
+            "user": 7,
+            "lesson": 1,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 2,
+        "fields": {
+            "user": 7,
+            "lesson": 23,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 3,
+        "fields": {
+            "user": 7,
+            "lesson": 24,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 4,
+        "fields": {
+            "user": 7,
+            "lesson": 25,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 5,
+        "fields": {
+            "user": 7,
+            "lesson": 31,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 6,
+        "fields": {
+            "user": 7,
+            "lesson": 26,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 7,
+        "fields": {
+            "user": 1,
+            "lesson": 1,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 8,
+        "fields": {
+            "user": 7,
+            "lesson": 28,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 9,
+        "fields": {
+            "user": 7,
+            "lesson": 27,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 10,
+        "fields": {
+            "user": 7,
+            "lesson": 32,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 11,
+        "fields": {
+            "user": 7,
+            "lesson": 30,
+            "completed": false,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 12,
+        "fields": {
+            "user": 7,
+            "lesson": 29,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 13,
+        "fields": {
+            "user": 1,
+            "lesson": 28,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 14,
+        "fields": {
+            "user": 12,
+            "lesson": 1,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 15,
+        "fields": {
+            "user": 1,
+            "lesson": 9,
+            "completed": true,
+            "like": false
+        }
+    },
+    {
+        "model": "courses.userlessonrelation",
+        "pk": 16,
+        "fields": {
+            "user": 7,
+            "lesson": 2,
+            "completed": true,
+            "like": false
+        }
+    }
+]
