@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load embed_video_tags %}
-{% load dics_get %}
+{% load custom_tags %}
+{% load static %}
 
 {% block title %}{{ lesson.title }} - DevLearn{% endblock title %}
 
@@ -11,7 +12,7 @@
             <ul class="list-group scroll">
                 {% for other_lesson in lesson.course.lessons.all %}
                     <li style="cursor: pointer;" onClick="location.href='{% url "courses:lesson_detail" other_lesson.slug %}'"
-                    class="list-group-item {% if user_lessons|check_completed:other_lesson.id %}is_completed{% endif %}">
+                    class="list-group-item {% if user_lessons_completed|check_completed:other_lesson.id %}is_completed{% endif %}">
                         <span class="{% if other_lesson == lesson %}is_active{% endif %}">
                             {{ other_lesson.order }}. {{ other_lesson.title|truncatechars:70 }}
                         </span>
@@ -34,41 +35,36 @@
                 <div class="mt-3">
                     <form method="post" action="">
                         {% csrf_token %}
-                        <a class="btn btn-success" href="{% url "courses:lesson_completed" lesson.slug %}">Урок пройден</a>
+                        <a class="btn btn-success" href="{% if request.user.is_authenticated %}{% url "courses:lesson_completed" lesson.slug %}{% endif %}">Урок пройден</a>
                     </form>
                 </div>
 
                 <!-- Placeholder for comments section -->
                 <div class="comments-section mt-5">
                     <h4>Комментарии</h4>
-                    <!-- Future implementation for comments will go here -->
-                    <p>Добавить комментарии...</p>
+                    <form method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-success" value="Отправить" style="display: none;">
+                    </form>
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <img src="{% if  comment.user.profile.avatar %}{{ comment.user.profile.avatar.url }}{% else %}{% static 'img/no_image_profile.jpg' %}{% endif %}" alt="User Avatar" class="avatar">
+                                <div class="user-info">
+                                    <p class="author">Автор: {{ comment.user.username }}</p>
+                                    <p class="date">{{ comment.created|date:"Y-m-d" }}</p>
+                                </div>
+                            </div>
+                            <div class="comment-body">
+                                <p>{{ comment.comment|linebreaks }}</p>
+                            </div><img src="{% static "img/trash_icon.jpg" %}" alt="Удалить" class="delete-icon" onClick="location.href='{% url "courses:comment_delete" lesson.slug comment.id %}'">
+                        </div>
+                    {% empty %}
+                        <p>Комментариев пока нет..</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-    {% comment %} <script> ахахаха это самая медленная хуйня которую я делал
-        window.addEventListener('load', () => {
-            let ul = document.querySelector('.list-group');
-            for (let children of ul.children) {
-                fetch(`http://127.0.0.1:8000/lesson-relation/${children.dataset.lessonid}`)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                        if (response.completed == true) {
-                            console.log('Он тру')
-                            children.classList.add('is_completed')
-                        }
-                    } else {
-                        console.error("Ошибка при получении статуса курса");
-                      }
-                })
-                .then(data => {
-                    if (data.completed == true) {
-                        children.classList.add('is_completed')
-                    }
-                })
-            }
-        })
-    </script> {% endcomment %}
 {% endblock content %}

@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('lesson/<slug:slug>/', views.lesson_detail_view, name='lesson_detail'),
     path('lesson/<slug:slug>/complete', views.lesson_completed_view, name='lesson_completed'),
+    path('lesson/<slug:slug>/comment/delete/<int:pk>', views.lesson_comment_delete_view, name='comment_delete'),
 ]
 
 if settings.DEBUG:

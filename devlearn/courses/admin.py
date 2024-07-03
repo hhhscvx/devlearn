@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Lesson, UserCourseRelation
+from .models import Course, Lesson, UserCourseRelation, UserLessonRelation, LessonComment
 from embed_video.admin import AdminVideoMixin
 
 @admin.register(Course)
@@ -12,4 +12,12 @@ class LessonAdmin(AdminVideoMixin, admin.ModelAdmin):
 
 @admin.register(UserCourseRelation)
 class UserCourseRelationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['user', 'course', 'enrolled', 'like', 'in_bookmarks', 'rate']
+
+@admin.register(UserLessonRelation)
+class UserLessonRelationAdmin(admin.ModelAdmin):
+    list_display = ['user', 'lesson', 'completed', 'like']
+
+@admin.register(LessonComment)
+class LessonCommentAdmin(admin.ModelAdmin):
+    list_display = ['lesson', 'user', 'comment', 'created']

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 
     'taggit',
     'embed_video',
-    'cachalot',
     # 'social_django',
 
     'users.apps.UsersConfig',

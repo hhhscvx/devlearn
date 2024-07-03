@@ -6,10 +6,12 @@ from django.db.models.signals import post_delete
 from django.conf import settings
 
 from .services import fields
-from .services.delete_all_cache import course_cache_delete, course_detail_cache_delete, lesson_detail_cache_delete
+from .services.delete_all_cache import (course_cache_delete, course_detail_cache_delete,
+                                        lesson_detail_cache_delete, user_lesson_completed_cache_delete)
 from .tasks import set_rating
-from .receivers import delete_course_cache_after_course_delete, \
-    delete_course_and_lesson_detail_cache_after_course_delete, delete_course_and_lesson_detail_cache_after_lesson_delete
+from .receivers import (delete_course_cache_after_course_delete,
+                        delete_course_and_lesson_detail_cache_after_course_delete,
+                        delete_course_and_lesson_detail_cache_after_lesson_delete)
 
 
 class Lesson(models.Model):
@@ -37,7 +39,7 @@ class Lesson(models.Model):
 
     def save(self, *args, **kwargs):
         create = not self.id
-        
+
         if (self.title != self.old_title) or (self.order != self.order) or create:
             course_detail_cache_delete()
         lesson_detail_cache_delete()
@@ -98,8 +100,6 @@ class UserCourseRelation(models.Model):  # Celery: получить курс и 
     in_bookmarks = models.BooleanField(default=False)  # "хочу пройти"
     rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
                                             blank=True, null=True)
-    comment = models.TextField(max_length=250, default=None,  # review?
-                               blank=True, null=True)
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
@@ -130,22 +130,22 @@ class UserLessonRelation(models.Model):
 
     def save(self, *args, **kwargs):
         lesson_detail_cache_delete()
+        user_lesson_completed_cache_delete()
         super().save(*args, **kwargs)
 
 
-# class Comment(models.Model):
-#     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
-#                                related_name='comments', null=True, blank=True)
-#     course = models.ForeignKey(Course, on_delete=models.CASCADE,
-#                                related_name='comments', null=True, blank=True)
-#     comment = models.TextField(max_length=250)
-#     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-#     created = models.DateTimeField(auto_now_add=True)
+class LessonComment(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    comment = models.TextField(max_length=250)
+    created = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         if self.lesson:
-#             return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
-#         return f'{self.user.username} Комментирует Курс {self.course}: {self.comment}'
+    def __str__(self):
+        return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
+    
+    class Meta:
+        ordering = ['-created']
+
 
 post_delete.connect(delete_course_cache_after_course_delete, sender=Course)
 post_delete.connect(delete_course_and_lesson_detail_cache_after_course_delete, sender=Course)
