@@ -21,7 +21,7 @@ def lesson_completed_view(request: HttpRequest, slug):
     lesson = Lesson.objects.get(slug=slug)
     user_lesson, _ = UserLessonRelation.objects.get_or_create(user=request.user, lesson=lesson)
     user_lesson.completed = True
-    user_lesson.save()
+    user_lesson.save(updated_by=request.user.id)
     return redirect('courses:lesson_detail', slug)
 
 

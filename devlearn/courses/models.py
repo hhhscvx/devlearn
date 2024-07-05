@@ -3,12 +3,12 @@ from taggit.managers import TaggableManager
 from embed_video.fields import EmbedVideoField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_delete
-from django.conf import settings
+from django.core.validators import MaxValueValidator
 
 from .services import fields
 from .services.delete_all_cache import (course_cache_delete, course_detail_cache_delete,
                                         lesson_detail_cache_delete, user_lesson_completed_cache_delete)
-from .tasks import set_rating
+from .tasks import set_rating, set_completed_percent
 from .receivers import (delete_course_cache_after_course_delete,
                         delete_course_and_lesson_detail_cache_after_course_delete,
                         delete_course_and_lesson_detail_cache_after_lesson_delete)
@@ -55,6 +55,9 @@ class Course(models.Model):
                                       through="UserCourseRelation")
 
     price = models.IntegerField(default=0)  # discount?????
+    discount_percent = models.PositiveIntegerField(default=0, blank=True, null=True, validators=[
+        MaxValueValidator(100)
+    ])
 
     title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, unique=True)
@@ -81,7 +84,7 @@ class Course(models.Model):
         return super().save(*args, **kwargs)
 
 
-class UserCourseRelation(models.Model):  # Celery: получить курс и вернуть курс
+class UserCourseRelation(models.Model):
     RATING_CHOICES = (
         (1, 1),
         (2, 2),
@@ -94,6 +97,8 @@ class UserCourseRelation(models.Model):  # Celery: получить курс и 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     completed = models.BooleanField(default=False)
+    completed_percent = models.DecimalField(max_digits=5, decimal_places=2,
+                                            default=0.00)
 
     enrolled = models.BooleanField(default=False)
     like = models.BooleanField(default=False)
@@ -128,10 +133,19 @@ class UserLessonRelation(models.Model):
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} изучает урок {self.lesson.title}'
 
+    def __init__(self, *args, **kwargs):
+        super(UserLessonRelation, self).__init__(*args, **kwargs)
+        self.old_completed = self.completed
+
     def save(self, *args, **kwargs):
+        create = not self.pk
+        request_user_id = kwargs.pop('updated_by', None)
+
         lesson_detail_cache_delete()
         user_lesson_completed_cache_delete()
         super().save(*args, **kwargs)
+        if not (self.completed == self.old_completed) or create:
+            set_completed_percent.delay(self.lesson.course.id, request_user_id)
 
 
 class LessonComment(models.Model):
@@ -140,9 +154,9 @@ class LessonComment(models.Model):
     comment = models.TextField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.user.username} Комментирует урок {self.lesson}: {self.comment}'
-    
+
     class Meta:
         ordering = ['-created']
 
