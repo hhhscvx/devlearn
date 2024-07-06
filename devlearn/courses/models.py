@@ -6,12 +6,9 @@ from django.db.models.signals import post_delete
 from django.core.validators import MaxValueValidator
 
 from .services import fields
-from .services.delete_all_cache import (course_cache_delete, course_detail_cache_delete,
-                                        lesson_detail_cache_delete, user_lesson_completed_cache_delete)
+from .services.delete_all_cache import course_cache_delete
 from .tasks import set_rating, set_completed_percent
-from .receivers import (delete_course_cache_after_course_delete,
-                        delete_course_and_lesson_detail_cache_after_course_delete,
-                        delete_course_and_lesson_detail_cache_after_lesson_delete)
+from .receivers import delete_course_cache_after_course_delete
 
 
 class Lesson(models.Model):
@@ -32,20 +29,6 @@ class Lesson(models.Model):
     class Meta:
         ordering = ['order']
 
-    def __init__(self, *args, **kwargs):
-        super(Lesson, self).__init__(*args, **kwargs)
-        self.old_title = self.title
-        self.old_order = self.order
-
-    def save(self, *args, **kwargs):
-        create = not self.id
-
-        if (self.title != self.old_title) or (self.order != self.order) or create:
-            course_detail_cache_delete()
-        lesson_detail_cache_delete()
-
-        return super().save(*args, **kwargs)
-
 
 class Course(models.Model):
     owner = models.ForeignKey(User, related_name='own_courses',
@@ -58,6 +41,7 @@ class Course(models.Model):
     discount_percent = models.PositiveIntegerField(default=0, blank=True, null=True, validators=[
         MaxValueValidator(100)
     ])
+    active = models.BooleanField(default=True)
 
     title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80, unique=True)
@@ -79,7 +63,6 @@ class Course(models.Model):
 
     def save(self, *args, **kwargs):
         course_cache_delete()
-        course_detail_cache_delete()
 
         return super().save(*args, **kwargs)
 
@@ -93,7 +76,7 @@ class UserCourseRelation(models.Model):
         (5, 5),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # related name?
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     completed = models.BooleanField(default=False)
@@ -105,6 +88,7 @@ class UserCourseRelation(models.Model):
     in_bookmarks = models.BooleanField(default=False)  # "хочу пройти"
     rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
                                             blank=True, null=True)
+    review = models.TextField(max_length=500, blank=True, null=True, default='')
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
@@ -115,7 +99,6 @@ class UserCourseRelation(models.Model):
 
     def save(self, *args, **kwargs):
         create = not self.pk
-        course_detail_cache_delete()
 
         super().save(*args, **kwargs)
         if not (self.rate == self.old_rate) or create:
@@ -141,8 +124,6 @@ class UserLessonRelation(models.Model):
         create = not self.pk
         request_user_id = kwargs.pop('updated_by', None)
 
-        lesson_detail_cache_delete()
-        user_lesson_completed_cache_delete()
         super().save(*args, **kwargs)
         if not (self.completed == self.old_completed) or create:
             set_completed_percent.delay(self.lesson.course.id, request_user_id)
@@ -162,5 +143,3 @@ class LessonComment(models.Model):
 
 
 post_delete.connect(delete_course_cache_after_course_delete, sender=Course)
-post_delete.connect(delete_course_and_lesson_detail_cache_after_course_delete, sender=Course)
-post_delete.connect(delete_course_and_lesson_detail_cache_after_lesson_delete, sender=Lesson)

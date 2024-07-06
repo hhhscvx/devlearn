@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, UserCourseRelation, Lesson, UserLessonRelation, LessonComment
 from django.core.paginator import Paginator
 from django.db.models import Prefetch
@@ -7,8 +7,27 @@ from django.core.cache import cache
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm
-from .services.delete_all_cache import lesson_detail_cache_delete
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, JsonResponse
+
+
+def course_review_list(request: HttpRequest, course_id):
+    user_course_list = UserCourseRelation.objects.filter(course_id=course_id, rate__isnull=False)
+    return render(request, 'courses/course_review_list.html', {'user_courses': user_course_list})
+
+
+def set_course_review(request: HttpRequest, course_id):
+    user_id = request.user.id
+    user_course = get_object_or_404(UserCourseRelation, user_id=user_id, course_id=course_id)
+    if request.method == "POST":
+        data = request.POST
+        print(f'Request data: {data}')
+        rate = data.get('rate')
+        review = data.get('review')
+        user_course.rate = rate
+        user_course.review = review
+        user_course.save()
+        return redirect('courses:course_detail', user_course.course.slug)
+    return JsonResponse({'success': True})
 
 
 def lesson_comment_delete_view(request: HttpRequest, slug, pk):
@@ -27,21 +46,12 @@ def lesson_completed_view(request: HttpRequest, slug):
 
 @login_required
 def lesson_detail_view(request: HttpRequest, slug):
-    lesson_cache_key = f'lesson_cache_{slug}'
-    lesson = cache.get(lesson_cache_key)
-    if not lesson:
-        lesson = Lesson.objects.get(slug=slug)
-        cache.set(lesson_cache_key, lesson, 60 * 60)
-        cache.set('lesson_detail_slug_cache', slug, 60 * 60)
+    lesson = Lesson.objects.select_related('course').get(slug=slug)
 
-    user_lesson_completed_cache_key = f'user_lesson_completed_cache_{slug}'
-    user_lessons_completed = cache.get(user_lesson_completed_cache_key)
-    if not user_lessons_completed:
-        user_lessons_completed = {ul.lesson.id: ul.completed for ul in UserLessonRelation.objects.filter(  # (левый bar в lesson-detail)
-            user=request.user, lesson__course=lesson.course).select_related('lesson')}
-        cache.set(user_lesson_completed_cache_key, user_lessons_completed, 60 * 60)
+    user_lessons_completed = {ul.lesson.id: ul.completed for ul in UserLessonRelation.objects.filter(
+        user=request.user, lesson__course=lesson.course).select_related('lesson')}
 
-    comments = LessonComment.objects.filter(lesson=lesson).select_related('lesson', 'user')
+    comments = LessonComment.objects.filter(lesson=lesson).select_related('user')
 
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -50,7 +60,6 @@ def lesson_detail_view(request: HttpRequest, slug):
             comment = form.cleaned_data['comment']
             new_comment = LessonComment.objects.create(comment=comment, lesson=lesson, user=user)
             new_comment.save()
-            lesson_detail_cache_delete()
             return redirect('courses:lesson_detail', slug)
     else:
         form = CommentForm()
@@ -74,7 +83,7 @@ def courses_list_view(request: HttpRequest):
                                             ).prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
             cache.set('course_cache_query', search_query, 60 * 60)
         else:
-            courses = Course.objects.all().prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
+            courses = Course.objects.filter(active=True).prefetch_related(Prefetch('owner', queryset=User.objects.all().only('username')))
         cache.set(cache_key, courses, 60 * 60)
 
     paginator = Paginator(courses, 60 * 60)
@@ -87,15 +96,12 @@ def courses_list_view(request: HttpRequest):
 
 
 def course_detail_view(request: HttpRequest, slug):
-    cache_key = f'course_detail_{slug}'
-    course = cache.get(cache_key)
-    if not course:
-        course = Course.objects.get(slug=slug)
-        cache.set('course_detail_slug_cache', slug, 60 * 60)
-        cache.set(cache_key, course, 60 * 60)
+    course = Course.objects.get(slug=slug)
+    request_user_id = request.user.id
+    user_course, _ = UserCourseRelation.objects.get_or_create(user_id=request_user_id, course_id=course.id)
     return render(request,
                   'courses/detail.html',
-                  {'course': course})
+                  {'course': course, 'user_course': user_course})
 
 
 @login_required

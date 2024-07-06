@@ -13,12 +13,42 @@
             <figure>
         {% endif %}
         <div class="course-description">{{ course.description }}</div>
-        {% if request.user not in course.students.all %}
-            <input onClick="location.href='{% url "courses:course_enroll" course.slug %}'" type="button" class="btn btn-success enroll-btn" value="Поступить">
+        <a href="{% url "courses:course_review_list" course.id %}">Смотреть отзывы</a>
+        {% if not user_course.enrolled %}
+            <input onClick="location.href='{% url "courses:course_enroll" course.slug %}'"
+             type="button" class="btn btn-success enroll-btn" value="Поступить">
         {% else %}
-            <input onClick="location.href='#'" type="button" class="btn btn-warning enroll-btn" value="Оставить отзыв">
+            <div id="reviewNotAllowed">Чтобы оставить отзыв, у вас должно быть пройдено хотя-бы 80% курса</div>
+            <input data-completed-percent="{{ user_course.completed_percent }}" type="button"
+             class="btn btn-warning enroll-btn" id="review" value="Оставить отзыв">
         {% endif %}
     </div>
+
+    <!-- Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form action="{% url "courses:set_course_review" course.id %}" method="POST" id="form-review">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="review">Отзыв:</label>
+              <textarea id="review" name="review" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="rate">Оценка:</label>
+              <select id="rate" name="rate" required>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success">Отправить</button>
+          </form>
+        </div>
+      </div>
+
     <div class="course-detail-right">
         <h3>Содержание курса</h3>
         <ul class="lesson-list">  {% comment %} Добавить еще возможность добавления в закладки и просмотр отзывов {% endcomment %}

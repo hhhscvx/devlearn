@@ -5,13 +5,13 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 
 
-def my_courses_view(request): #  бля это типо тоже надо кешировать🤔🤔🤔🤔
-    courses = request.user.courses.all()
+def my_courses_view(request):
+    courses = request.user.courses.filter(active=True)
     paginator = Paginator(courses, 10)
 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(request, 'my_courses.html', {'courses': courses})
+    return render(request, 'my_courses.html', {'courses': page_obj})
 
 
 class CustomLoginView(LoginView):

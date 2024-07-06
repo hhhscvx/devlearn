@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Отзывы о курсе {{ user_courses.first.course.title }}{% endblock title %}
+
+{% block content %}
+    <h2>Список отзывов о курсе {{ user_courses.first.course.title }}</h2>
+    <ul class="review-list">
+        {% for user_course in user_courses %}
+            <li class="review-item">
+                <div class="review-avatar">
+                    {% if user_course.user.profile.avatar %}
+                        <img src="{{ user_course.user.profile.avatar.url }}" alt="{{ user_course.user.username }}'s avatar">
+                    {% else %}
+                        <img src="{% static 'img/no_image_profile.jpg' %}" alt="Default avatar">
+                    {% endif %}
+                </div>
+                <div class="review-content">
+                    <div class="review-username">{{ user_course.user.username }}</div>
+                    <div class="review-text">{{ user_course.review }}</div>
+                    <div class="review-rating">
+                        {% for _ in '12345' %}
+                            {% if user_course.rate >= forloop.counter %}
+                                &#9733;
+                            {% else %}
+                                &#9734;
+                            {% endif %}
+                        {% endfor %}
+                    </div>  
+                </div>
+            </li>
+        {% empty %}
+            <p>Отзывов пока нет..</p>
+        {% endfor %}
+    </ul>
+{% endblock content %}
