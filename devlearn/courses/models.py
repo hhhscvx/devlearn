@@ -68,14 +68,6 @@ class Course(models.Model):
 
 
 class UserCourseRelation(models.Model):
-    RATING_CHOICES = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-    )
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
@@ -86,15 +78,32 @@ class UserCourseRelation(models.Model):
     enrolled = models.BooleanField(default=False)
     like = models.BooleanField(default=False)
     in_bookmarks = models.BooleanField(default=False)  # "хочу пройти"
-    rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
-                                            blank=True, null=True)
-    review = models.TextField(max_length=500, blank=True, null=True, default='')
 
     def __str__(self) -> str:
         return f'Пользователь {self.user.username} поступил на курс {self.course.title}'
 
+
+class Review(models.Model):
+    RATING_CHOICES = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    )
+    user_course_relation = models.OneToOneField(UserCourseRelation, related_name='review', on_delete=models.PROTECT)
+    rate = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=None,
+                                            blank=True, null=True)
+    review = models.TextField(max_length=500)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Отзыв {self.user_course_relation.user.username} \
+        на курс {self.user_course_relation.course.title}'
+
     def __init__(self, *args, **kwargs):
-        super(UserCourseRelation, self).__init__(*args, **kwargs)
+        super(Review, self).__init__(*args, **kwargs)
         self.old_rate = self.rate
 
     def save(self, *args, **kwargs):
@@ -103,7 +112,7 @@ class UserCourseRelation(models.Model):
         super().save(*args, **kwargs)
         if not (self.rate == self.old_rate) or create:
             course_cache_delete()
-            set_rating.delay(self.course.id)
+            set_rating.delay(self.user_course_relation.course.id)
 
 
 class UserLessonRelation(models.Model):

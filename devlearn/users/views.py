@@ -3,8 +3,10 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def my_courses_view(request):
     courses = request.user.courses.filter(active=True)
     paginator = Paginator(courses, 10)

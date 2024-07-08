@@ -39,3 +39,9 @@
 .review-rating {
   color: #ffcc00;
 }
+
+.released {
+  font-style: normal;
+  font-weight: bolder;
+  padding-left: 6px;
+}

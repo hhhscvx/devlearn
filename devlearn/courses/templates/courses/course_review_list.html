@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Отзывы о курсе {{ user_courses.first.course.title }}{% endblock title %}
+
+
+{% block title %}Отзывы о курсе «{{ course.title }}»{% endblock title %}
 
 {% block content %}
-    <h2>Список отзывов о курсе {{ user_courses.first.course.title }}</h2>
+    <style>
+        h2, a, p {
+            padding: 5px 0 0 5px;
+        }
+    </style>
+    <h2>Список отзывов о курсе <a class="no-decoration" style="color: black;"
+        href="{% url "courses:course_detail" course.slug %}">«{{ course.title }}»</a></h2>
     <ul class="review-list">
         {% for user_course in user_courses %}
             <li class="review-item">
@@ -12,15 +20,15 @@
                     {% if user_course.user.profile.avatar %}
                         <img src="{{ user_course.user.profile.avatar.url }}" alt="{{ user_course.user.username }}'s avatar">
                     {% else %}
-                        <img src="{% static 'img/no_image_profile.jpg' %}" alt="Default avatar">
+                        <img src="{% static 'img/no_image_profile.jpg' %}" alt="No image avatar">
                     {% endif %}
                 </div>
                 <div class="review-content">
-                    <div class="review-username">{{ user_course.user.username }}</div>
-                    <div class="review-text">{{ user_course.review }}</div>
+                    <div class="review-username">{{ user_course.user.username }}<span class="released">{{ user_course.review.created }}</span></div>
+                    <div class="review-text">{{ user_course.review.review }}</div>
                     <div class="review-rating">
                         {% for _ in '12345' %}
-                            {% if user_course.rate >= forloop.counter %}
+                            {% if user_course.review.rate >= forloop.counter %}
                                 &#9733;
                             {% else %}
                                 &#9734;
@@ -33,4 +41,6 @@
             <p>Отзывов пока нет..</p>
         {% endfor %}
     </ul>
+    <a class="no-decoration"
+     href="{% url "courses:course_detail" course.slug %}">Назад к курсу</a> {% comment "ЩАС ДЕЛАЮ ПРИ РЕГИСТРАЦИИ СОЗДАНИЕ ПРОФИЛЯ" %}{% endcomment %}
 {% endblock content %}

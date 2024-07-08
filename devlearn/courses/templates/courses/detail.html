@@ -13,7 +13,7 @@
             <figure>
         {% endif %}
         <div class="course-description">{{ course.description }}</div>
-        <a href="{% url "courses:course_review_list" course.id %}">Смотреть отзывы</a>
+        <a class="no-decoration" href="{% url "courses:course_review_list" course.id %}">Смотреть отзывы</a>
         {% if not user_course.enrolled %}
             <input onClick="location.href='{% url "courses:course_enroll" course.slug %}'"
              type="button" class="btn btn-success enroll-btn" value="Поступить">
