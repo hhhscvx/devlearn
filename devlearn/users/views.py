@@ -1,9 +1,11 @@
+import datetime
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from learner.models import Profile
 
 
 @login_required
@@ -30,6 +32,9 @@ def register_view(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
+            profile, created = Profile.objects.get_or_create(user=user)
+            if created:
+                profile.registered = datetime.date()
             return redirect('courses:course_list')
         else:
             return render(request, 'registration/register.html', {'form': form})

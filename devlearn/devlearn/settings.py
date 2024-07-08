@@ -41,10 +41,12 @@ INSTALLED_APPS = [
 
     'taggit',
     'embed_video',
+    'imagekit',
     # 'social_django',
 
     'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
+    'learner.apps.LearnerConfig',
 ]
 
 MIDDLEWARE = [
