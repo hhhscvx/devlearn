@@ -22,12 +22,13 @@
 
 ## Технологии, использованные в проекте
 1. Backend на `Django`
-2. REST API на `Django Rest Framework`
-3. База Данных `PostgreSQL` 
-4. Система кеширования `Redis`
-5. Очереди задач `Celery` & `Flower`
-6. Контейнеризация `Docker`
-7. Бизнес-логика в модуле `services`, а не во `views`
+2. Frontend на `JavaScript` & `HTML` & `CSS`
+3. REST API на `Django Rest Framework`
+4. База Данных `PostgreSQL` 
+5. Система кеширования и брокер сообщений `Redis`
+6. Очереди задач `Celery` & `Flower`
+7. Контейнеризация `Docker`
+8. Бизнес-логика в модуле `services`, а не во `views`
 
 ## Изображения функционала:
 
