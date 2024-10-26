@@ -2,15 +2,15 @@
 
 ## О проекте
 **[DevLearn]** Обучающая платформа на `Django`, в которой есть:
-- [Авторизация](#img1)
-- [Профили у каждого пользователя](#img10)
+- [Авторизация](https://github.com/hhhscvx/devlearn/tree/master/.github/images/login.png)
+- [Профили у каждого пользователя](https://github.com/hhhscvx/devlearn/tree/master/.github/images/profile.png)
 - Проходить курс можно только авторизовавшись
-- [Возможность поступить на курс](#img4)
-- [У каждого курса список уроков](#img4)
-- [Возможность смотреть уроки курса (Youtube API)](#img8)
-- [У каждого урока кнопка "Урок пройден"](#img8)
-- [Отслеживание процента прохождения курса](#img7)
-- [Отзывы у курсов, которые можно оставлять после прохождения 80% его уроков](#img6)
+- [Возможность поступить на курс](https://github.com/hhhscvx/devlearn/tree/master/.github/images/course_detail.png)
+- [У каждого курса список уроков](https://github.com/hhhscvx/devlearn/tree/master/.github/images/course_detail.png)
+- [Возможность смотреть уроки курса (Youtube API)](https://github.com/hhhscvx/devlearn/tree/master/.github/images/lesson_detail.png)
+- [У каждого урока кнопка "Урок пройден"](https://github.com/hhhscvx/devlearn/tree/master/.github/images/lesson_detail.png)
+- [Отслеживание процента прохождения курса](https://github.com/hhhscvx/devlearn/tree/master/.github/images/set_review_error.png)
+- [Отзывы у курсов, которые можно оставлять после прохождения 80% его уроков](https://github.com/hhhscvx/devlearn/tree/master/.github/images/set_review.png)
 
 ## Доработки (TODO)
 1. Улучшение профиля пользователя, взаимодействие с ним
