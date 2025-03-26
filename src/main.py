@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from src.course.views import router as course_router
+from .course.handlers import router as course_router
 
 
 app = FastAPI()
