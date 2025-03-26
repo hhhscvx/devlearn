@@ -5,7 +5,28 @@ services:
      - "8000:8000"
     volumes:
      - ./src:/code/app
+    environment:
+      DB_HOST: db
+      DB_NAME: devlearn_db
+      DB_USER: devlearn_db_user
+      DB_PASS: devlearn_db_password
+      DB_PORT: 5432
+    depends_on:
+      - db
     command: > 
       sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
-  
+  db:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: devlearn_db_password
+      POSTGRES_USER: devlearn_db_user
+      POSTGRES_DB: devlearn_db
+
+
+volumes:
+  postgres_data:
